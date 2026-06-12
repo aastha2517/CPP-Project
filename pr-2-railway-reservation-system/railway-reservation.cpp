@@ -2,32 +2,34 @@
 using namespace std;
 class Train{
 	private:
-		int trainNumber;
 		string trainName;
 		string source;
 		string destination;
 		string trainTime;
 		
 	public:
+				
+		// Static variable
+		static int trainCount;
+		
+		int trainNumber;
+		
 		
 		// Defult Constructor
-		
 		Train(){
 		}
 		
 		// Parameterized Constructor
 		
 		Train(int number,string name,string source,string destination,string time){
-			trainNumber=number;
-			trainName=name;
+			this->trainNumber=number;
+			this->trainName=name;
 			this->source=source;
 			this->destination=destination;
-			trainTime=time;
+			this->trainTime=time;
+			trainCount++;
 		}
-		
-		// Static variable
-		
-		static int trainCount;
+
 		
 		// Setter Function
 		
@@ -37,6 +39,7 @@ class Train{
 			this->source=source;
 			this->destination=destination;
 			trainTime=time;
+			trainCount++;
 		}
 		
 		//Getter Function
@@ -48,9 +51,8 @@ class Train{
 			cout<<"----------------------------"<<endl;
 		}
 		
-		static void getTrainCount(){
-			trainCount++;
-			cout<<"Train count :"<<trainCount<<endl;
+		static int getTrainCount(){
+			return trainCount;
 		}
 		
 		// Destructor
@@ -62,34 +64,92 @@ class Train{
 		
 
 };
+
+class RailwaySystem{
+	private:	
+		Train trains[100];
+		int totaltrains=0;
+		
+	public:
+		void addTrain(int number,string name,string source,string destination,string time){
+			trains[totaltrains].inputTrainDetail(number,name,source,destination,time);
+			totaltrains++;
+			cout<<"Train Create Successfully......"<<endl;
+		}
+		
+		void displayAllTrains(){
+			for(int i=0;i<totaltrains;i++){
+				trains[i].displayTrainDetail();
+			}
+		}
+		
+		void searchTrainByNumber(int number){
+			for(int i=0;i<totaltrains;i++){
+				if(trains[i].trainNumber==number){
+					trains[i].displayTrainDetail();
+				}	
+			}
+		}
+};
+
+
+
+
+
+
 int Train::trainCount = 0;	
 
 int main(){
-	
 
-	int n,number;
-	cout<<endl<<"Enter Train record number :";
-	cin>>n;
-	string name,source,destination,time;
-	Train trains[n];
-	for(int i=0;i<n;i++){
-		cout<<endl<<"Train "<<i+1<<" Detail"<<endl;
-		cout<<endl<<"Enter Train Number:";
-		cin>>number;
-		cout<<endl<<"Enter Train Name:";
-		cin>>name;
-		cout<<endl<<"Enter Source:";
-		cin>>source;
-		cout<<endl<<"Enter Destination:";
-		cin>>destination;
-		cout<<endl<<"Enter Train Time:";
-		cin>>time;
-		cout<<endl;
-		trains[i].inputTrainDetail(number,name,source,destination,time);
-	}
-	for(int i=0;i<n;i++){
-		trains[i].displayTrainDetail();
-	}
+	RailwaySystem irctc;
+	int choice;
+	
+	do{
+		cout<<"--- Railway Reservation System Menu ---"<<endl;
+		cout<<"Press 1 for Add New Train Record "<<endl;
+		cout<<"Press 2 for Display All Train Records "<<endl;
+		cout<<"Press 3 for Search Train by Number "<<endl;
+		cout<<"Press 4 for Exit"<<endl;
+		
+		cout<<"Enter Your Choice :";
+		cin>>choice;
+		
+		int number;
+		string name,source,destination,time;
+		
+		switch(choice){
+			case 1 :
+	
+				cout<<"Enter Train Number:" ;
+				cin>>number;
+				cout<<"Enter Train Name:";
+				cin>>name;
+				cout<<"Enter Source:";
+				cin>>source;
+				cout<<"Enter Destination:";
+				cin>>destination;
+				cout<<"Enter Train Time:";
+				cin>>time;
+				irctc.addTrain(number,name,source,destination,time);
+				break;
+				
+			case 2:
+				irctc.displayAllTrains();
+				break;
+				
+			case 3:
+				int num;
+				cout<<"Enter Train Number to search :";
+				cin>>num;
+				irctc.searchTrainByNumber(num);
+				break;
+				
+			default:
+				cout<<"Exiting The system Thank You ....."<<endl;
+		}	
+	
+	}while(choice!=4);
+	
 	return 0;
 	
 }

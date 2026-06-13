@@ -76,14 +76,14 @@ class RailwaySystem{
 			cout<<"Train Create Successfully......"<<endl;
 		}
 		
-		// Display Train Records Function
+		// 2.Display Train Records Function
 		void displayAllTrains(){
 			for(int i=0;i<totaltrains;i++){
 				trains[i].displayTrainDetail();
 			}
 		}
 		
-		// Search Train by Number Function
+		// 3.Search Train by Number Function
 		void searchTrainByNumber(int number){
 		    for(int i=0;i<totaltrains;i++){
 		        if(trains[i].trainNumber==number){

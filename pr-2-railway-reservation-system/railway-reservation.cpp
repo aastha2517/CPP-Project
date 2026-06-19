@@ -147,6 +147,7 @@ int main(){
 				
 			default:
 				cout<<"Exiting The system Thank You ....."<<endl;
+				break;
 		}	
 	
 	}while(choice!=4);

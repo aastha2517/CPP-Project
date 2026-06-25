@@ -1,4 +1,4 @@
-#include<iostream>
+         #include<iostream>
 using namespace std;
 
 class Vehicle{
@@ -7,6 +7,7 @@ class Vehicle{
 		string manufacturer;
 		string model;
 		int year;
+		string type;
 	public:
 		// static Variable
 		static int totalVehicles;
@@ -33,11 +34,20 @@ class Vehicle{
 		}
 		
 		// Getter
-		void getVehicleinfo(){
+		void display(){
 			cout<<endl;
 			cout<<"Vehicle ID :"<<vehicle_id<<endl<<"Vehicle Manufacturer :"<<manufacturer<<endl
 			<<"Vehicle Model :"<<model<<endl<<"Vehicle Year :"<<year <<endl;
 		}
+		
+		void setType(string tp){
+			type = tp;
+		}
+		
+		string getType(){
+			return type; // EV,SUV,SEDAN
+		}
+		
 		
 		//Deconstrutor
 		~Vehicle(){
@@ -68,8 +78,8 @@ class Car : public Vehicle{
 		}
 		
 		// Getter
-		void getCarinfo(){
-			Vehicle::getVehicleinfo();
+		void display(){
+			Vehicle::display();
 			cout<<"Fuel Type :"<<fuelType<<endl;
 		}
 	
@@ -81,6 +91,7 @@ class Car : public Vehicle{
 class ElectricCar : public Car{
 	private:
 		int battery_capacity;
+		string type="EV";
 	public:
 		
 		// Defult Constructor
@@ -103,10 +114,18 @@ class ElectricCar : public Car{
 		}
 		
 		// Getter
-		void getElectricCarinfo(){
-			Car::getCarinfo();
+		void displayEV(){
+			Car::display();
 			cout<<"Battery Capacity :"<<battery_capacity<<endl;
 		}
+		
+//		void setEVType(string tp){
+//			Vehicle::setType(tp);
+//		}
+		
+//		string getType(){
+//			return type;
+//		}
 	
 		//Deconstrutor
 		~ElectricCar(){
@@ -136,7 +155,7 @@ class AirCraft{
 		}
 		
 		// Getter
-		void getAirCraftinfo(){
+		void display(){
 			cout<<endl;
 			cout<<"Fight Range :"<<flightRange<<endl;
 		}
@@ -171,9 +190,9 @@ class FlyingCar : public Car, public AirCraft{
 		}
 		
 		// Getter
-		void getFlyingCarinfo(){
-			Car::getCarinfo();
-			AirCraft::getAirCraftinfo();
+		void display(){
+			Car::display();
+			AirCraft::display();
 		}
 		
 		//Deconstrutor
@@ -206,8 +225,8 @@ class SportsCar : public ElectricCar{
 		}
 		
 		// Getter
-		void getSportsCarinfo(){
-			ElectricCar::getElectricCarinfo();
+		void display(){
+			ElectricCar::display();
 			cout<<"Top Speed :"<<Topspeed<<endl;
 		}
 	
@@ -238,8 +257,8 @@ class Sedan: public Car{
 		}
 		
 		// Getter
-		void getSedaninfo(){
-			Car::getCarinfo();
+		void display(){
+			Car::display();
 		}
 		
 		//Deconstrutor
@@ -253,6 +272,7 @@ class SUV: public Car{
 
 	private:
 	public:
+
 		
 		// Defult Constructor
 		SUV(){
@@ -270,10 +290,14 @@ class SUV: public Car{
 			Car::setCarinfo(id, manufacturer, model, year, fuelType);
 		}
 		
+	
+	
 		// Getter
-		void getSUVinfo(){
-			Car::getCarinfo();
+		void displaySUV(){
+			Car::display();
 		}
+		
+		
 		
 		//Deconstrutor
 		~SUV(){
@@ -282,56 +306,94 @@ class SUV: public Car{
 	
 };
 
-class VehicleRegistry:public Car{
+class VehicleRegistry:public ElectricCar,public SportsCar,public Sedan,public SUV{
 	private:
-		Car *VehicleArr[100];
+		Vehicle *vehicleArr[100];
 		int index=0;
 	public:
-		void addCarInfo(int id,string manufacturer,string model,int year,string fuelType){
-
-			Car *c=new Car();
-			VehicleArr[index]=c;
-			c->setCarinfo(id,manufacturer,model,year,fuelType);
+		//Car
+//		void addCarInfo(int id,string manufacturer,string model,int year,string fuelType){
+//			Car *c=new Car();
+//			vehicleArr[index]=c;
+//			c->setCarinfo(id,manufacturer,model,year,fuelType);
 //			index++;
+//		}
+		
+		//Electric Car
+		void addElectricCarinfo(int id,string manufacturer,string model,int year,string fuelType,int battery, string ty){
+			ElectricCar *e=new ElectricCar(); //pointer-> address
+			vehicleArr[index]=e; // [0]
+			e->setElectricCarinfo(id,manufacturer,model,year,fuelType,battery);
+			e->setType(ty);
+			index++;
 		}
 		
-		void displayCarinfo(){
-			VehicleArr[0]->getCarinfo();
-		}	
+		void addSUVCarinfo(int id,string manufacturer,string model,int year,string fuelType,string type){
+			SUV *e=new SUV();
+			vehicleArr[index]=e; // SUV -> Vehcile
+			e->setSUVinfo(id,manufacturer,model,year,fuelType);
+			e->setType(type);
+			index++;
+		}
+		
+		void displayinfo(){
+			for(int i=0;i<index;i++){
+				if(vehicleArr[i]->getType() == "EV"){ // s -> getType
+					((ElectricCar*)vehicleArr[i])->displayEV();
+				}else if(vehicleArr[i]->getType() == "SUV"){
+					((SUV*)vehicleArr[i])->displaySUV();
+				}
+			}
+			
+		}
+		
+//		void setType(string tp){
+//			type = tp;
+//		}
+		
+		
+		
 	
 };
 int Vehicle ::totalVehicles=0;
 int main(){
 	
-	Vehicle v1(101,"abcd","vehicle",2020);
-	v1.getVehicleinfo();
+//	Vehicle v1(101,"abcd","vehicle",2020);
+//	v1.getVehicleinfo();
+//	
+//	Car c1(101,"abc","car",2021,"petrol");
+//	c1.getCarinfo();
+//	
+//	ElectricCar e1(101,"abc","Electriccar",2021,"petrol",78);
+//	e1.getElectricCarinfo();
+//	
+//	AirCraft a1(989);
+//	a1.getAirCraftinfo();
+//	
+//	FlyingCar f1(101,"abc","flyingcar",2021,"petrol",567);
+//	f1.getFlyingCarinfo();
+//	
+//	SportsCar s1(101,"abc","Sportscar",2025,"petrol",78,50);
+//	s1.getSportsCarinfo();
+//	
+//	Sedan se1(101,"abc","sedan",2022,"petrol");
+//	se1.getSedaninfo();
+//	
+//	SUV suv1(101,"abc","suv",2023,"petrol");
+//	suv1.getSUVinfo();
+//	
 	
-	Car c1(101,"abc","car",2021,"petrol");
-	c1.getCarinfo();
-	
-	ElectricCar e1(101,"abc","Electriccar",2021,"petrol",78);
-	e1.getElectricCarinfo();
-	
-	AirCraft a1(989);
-	a1.getAirCraftinfo();
-	
-	FlyingCar f1(101,"abc","flyingcar",2021,"petrol",567);
-	f1.getFlyingCarinfo();
-	
-	SportsCar s1(101,"abc","Sportscar",2025,"petrol",78,50);
-	s1.getSportsCarinfo();
-	
-	Sedan se1(101,"abc","sedan",2022,"petrol");
-	se1.getSedaninfo();
-	
-	SUV suv1(101,"abc","suv",2023,"petrol");
-	suv1.getSUVinfo();
-	
-	
-	VehicleRegistry r1;
-	r1.addCarInfo(101,"abc","car-arr",2021,"petrol");
-	
-	r1.displayCarinfo();
+//	VehicleRegistry r1;
+//	r1.addCarInfo(101,"abc","car-arr",2021,"petrol");
+//	
+//	r1.displayinfo();
+//	
+//	VehicleRegistry r2;
+//	r2.addCarInfo(101,"abcdef","car-arr-2",2025,"petrol");
+//	
+//	r2.displayinfo();
+//	
+	VehicleRegistry r3;
 	
 	return 0;
 }

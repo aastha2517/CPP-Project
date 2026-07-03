@@ -5,8 +5,6 @@ class BankAccount{
 	private:
 		int AccountNumber;
 		string AccountHolderName;
-		
-	protected:
 		double balance;
 
 	public:
@@ -37,8 +35,9 @@ class BankAccount{
 			balance -= w_amount;
 		}
 		
-		void getbalance(){
-			cout<<"Current Balance :"<<balance<<endl;
+		double getbalance(){
+//			cout<<"Current Balance :"<<balance<<endl;
+			return balance;
 		}
 		
 		void displayAccountInfo(){
@@ -85,7 +84,7 @@ class SavingsAccount:public BankAccount{
 		}
 		
 		void calculateInterest(){
-			interest= balance*0.05;
+			interest=(getbalance())*0.05;
 		}
 		
 		~SavingsAccount(){
@@ -120,22 +119,21 @@ class CheckingAccount :public BankAccount{
 		}
 		double checkOverdraft(){
 			
-			double limit=balance+overdraftLimit;
+			double limit=(getbalance())+overdraftLimit;
 			return limit;
 		}
-		double withdraw(double amount){
+		void withdraw(double amount){
 			
 			double limit=checkOverdraft();
 			
-			cout<<"Enter withdrawal Amount :";
-			cin>>amount;
-			
 			if(amount<=limit){
+				BankAccount::withdraw(amount);
 				cout<<"Withdrawal Successful......"<<endl;
 			}else{
 				cout <<"Overdraft Limit Exceeded..."<<endl;
 			}	
 			
+		
 		}
 		
 		void getCheckingAccountinfo(){
@@ -176,7 +174,7 @@ class FixedDepositAccount :public BankAccount{
 		}
 		
 		void calculateInterest(){
-			interest= balance*0.08*term;
+			interest=(getbalance())*0.08*term;
 		}
 		
 		~FixedDepositAccount(){
@@ -186,22 +184,19 @@ class FixedDepositAccount :public BankAccount{
 int main(){
 	
 	double a_number,balance,term,overdraft;
-	int choice,wd,d_amount,w_amount;
+	int choice,wd,d_amount,w_amount,acc_choice;
 	string a_name,gettype,yes_no;
 	int index=0;
 	
 	BankAccount *bankArr[100];
 	
 	do{
-		cout<<"Press 1 to Create Saving Account"<<endl;
-		cout<<"Press 2 to Create Checking Account"<<endl;
-		cout<<"Press 3 to Create Fixed Deposite Account"<<endl;
-		cout<<"Press 4 to Withdraw"<<endl;
-		cout<<"Press 5 to Deposit"<<endl;
-//		cout<<"Press 6 to Withdraw form Checking Account"<<endl;
-		cout<<"Press 7 to Check Overdraft"<<endl;
-		cout<<"Press 8 to See Your Account Info"<<endl;
-		cout<<"Press 9 to Exit"<<endl;
+		cout<<endl;
+		cout<<"Press 1 to Create  Account"<<endl;
+		cout<<"Press 2 to Withdraw"<<endl;
+		cout<<"Press 3 to Deposit"<<endl;
+		cout<<"Press 4 to See Your Account Info"<<endl;
+		cout<<"Press 5 to Exit"<<endl;
 		cout<<"--------------------------------------------"<<endl;
 		cout<<endl;
 		
@@ -210,128 +205,158 @@ int main(){
 		
 		switch(choice){
 			case 1 :{
-
 				
-				cout<<"Enter Account Number :";
-				cin>>a_number;
-				cout<<"Enter Account Holder Name :";
-				cin>>a_name;
-				cout<<"Enter Account Balance :";
-				cin>>balance;
-				gettype="Saving Account";
-//				cout<<"If You Want to Withdraw From Checking Account Enter Yes :";
-//				cin>>yes_no;
+				cout<<"Press 1 to Add Saving Account"<<endl;
+				cout<<"Press 2 to Add Checking Account"<<endl;
+				cout<<"Press 3 to Add Fix Deposit Account"<<endl;
+				cout<<"--------------------------------------------"<<endl;
+				cout<<endl;
 				
-				SavingsAccount *s1=new SavingsAccount();
-				s1->setSavingsAccountinfo(a_number,a_name,balance,gettype);
-				bankArr[index]=s1;
-				index++;
-//				if(yes_no=="Yes"||"yes"||"YES"){
-//					cout<<"Press 1 to Deposit"<<endl;
-//					cout<<"Press 2 to Withdraw"<<endl;
-//					cout<<"Enter Your Choice :";
-//					cin>>wd;
-//					if(wd==1){
-//						cout<<"Enter Amount To Deposit :";
-//						cin>>d_amount;
-//						s1->deposit(d_amount);	
-//						cout<<"Deposit successfully......"<<endl;
-//					}else if(wd==2){
-//						cout<<"Enter Amount To Withdraw :";
-//						cin>>w_amount;
-//						s1->withdraw(w_amount);
-//						cout<<"Withdraw successfully......"<<endl;
-//					}else{
-//						cout<<"Somthing get wrong...."<<endl;
-//					}
-//				}else{
-//					break;
-//				}
-				break;
+				cout<<"Enter Your Choice :";
+				cin>>acc_choice;
+				
+				switch(acc_choice){
+					case 1 :{
+					
+						
+						cout<<"Enter Account Number :";
+						cin>>a_number;
+						cout<<"Enter Account Holder Name :";
+						cin>>a_name;
+						cout<<"Enter Account Balance :";
+						cin>>balance;
+						gettype="Saving Account";
+					
+						
+						SavingsAccount *s1=new SavingsAccount();
+						s1->setSavingsAccountinfo(a_number,a_name,balance,gettype);
+						bankArr[index]=s1;
+						index++;
+						
+						break;	
+					}
+					case 2 :{
+						
+						cout<<"Enter Account Number :";
+						cin>>a_number;
+						cout<<"Enter Account Holder Name :";
+						cin>>a_name;
+						cout<<"Enter Account Balance :";
+						cin>>balance;
+						cout<<"Enter Overdraft Limit :";
+						cin>>overdraft;
+						gettype="Checking Account";
+							
+						
+						CheckingAccount *c1=new CheckingAccount();
+						c1->setCheckingAccountinfo(a_number,a_name,balance,overdraft, gettype);
+						bankArr[index]=c1;
+						index++;
+						
+						break;
+					}
+						
+					case 3 :{
+					
+						cout<<"Enter Account Number :";
+						cin>>a_number;
+						cout<<"Enter Account Holder Name :";
+						cin>>a_name;
+						cout<<"Enter Account Balance :";
+						cin>>balance;
+						cout<<"Enter Your Term :";
+						cin>>term;
+						gettype="Fix Deposit Account";
+						
+						FixedDepositAccount *f1=new FixedDepositAccount();
+						f1->setFixedDepositAccountinfo(a_number,a_name,balance,term,gettype);
+						bankArr[index]=f1;
+						index++;
+						
+						break;
+					}
+					default :
+						cout<<"Invalid Choice...."<<endl;
+						break;
+						
+				}
+				
+			break;
 			}
+			
 			case 2 :{
 				
 				cout<<"Enter Account Number :";
 				cin>>a_number;
-				cout<<"Enter Account Holder Name :";
-				cin>>a_name;
-				cout<<"Enter Account Balance :";
-				cin>>balance;
-				cout<<"Enter Overdraft Limit :";
-				cin>>overdraft;
-				gettype="Checking Account";
-//				cout<<"Enter withdrawal Amount :";
-//				cin>>amount;
-				cout<<"If You Want to Withdraw From Checking Account Enter Yes :";
-				cin>>yes_no;
 				
-					
-				
-				CheckingAccount *c1=new CheckingAccount();
-				c1->setCheckingAccountinfo(a_number,a_name,balance,overdraft, gettype);
-				bankArr[index]=c1;
-				if(yes_no=="Yes"||"yes"||"YES"){
-					c1->checkOverdraft();
-				}else{
-					break;
-				}
-				index++;
-				break;
-			}
-			case 3 :{
-				cout<<"Enter Account Number :";
-				cin>>a_number;
-				cout<<"Enter Account Holder Name :";
-				cin>>a_name;
-				cout<<"Enter Account Balance :";
-				cin>>balance;
-				cout<<"Enter Your Term :";
-				cin>>term;
-				gettype="Fix Deposit Account";
-				
-				FixedDepositAccount *f1=new FixedDepositAccount();
-				f1->setFixedDepositAccountinfo(a_number,a_name,balance,term,gettype);
-				bankArr[index]=f1;
-				index++;
-				
-				break;
-			}
-			
-			case 4:
-				
-				cout<<"Enter Account Number :";
-				cin>>a_number;
+				bool flag = false;
 				for(int i=0;i<index;i++){
 					if(bankArr[i]->getacc_number()==a_number){
+						flag = true;
 						if(bankArr[i]->displaytype()=="Saving Account"){
 							cout<<"Enter Withdraw Amount :";
 							cin>>w_amount;
 							bankArr[i]->withdraw(w_amount);
-//							break;
-							return;
+							break;
+						}else if(bankArr[i]->displaytype()=="Checking Account"){
+							cout<<"Enter Withdraw Amount :";
+							cin>>w_amount;
+							((CheckingAccount*)bankArr[i])->withdraw(w_amount);
+							
+						}else if(bankArr[i]->displaytype()=="Fix Deposit Account"){
+							cout<<"Can't Withdraw from Fix Deposit"<<endl;
+						}else{
+							cout<<"Something get wrong...."<<endl;
+							break;
 						}
-//						else if(bankArr[i]->displaytype()=="Checking Account"){
-////							cout<<"You Don't have Saving Account....."<<endl;
-////							if(bankArr[i]->displaytype()=="Checking Account"){
-//							cout<<"Enter Withdraw Amount :";
-//							cin>>w_amount;
-//							bankArr[i]->withdraw(w_amount);
-//						}
+						break;
+					} 
+						
+				}
+				if(flag==false){
+					cout<<"There is no Account found......"<<endl;
+				}
+				
+				
+				break;
+			}
+			
+			case 3 :{
+				
+				cout<<"Enter Account Number :";
+				cin>>a_number;
+				
+				for(int i=0;i<index;i++){
+					if(bankArr[i]->getacc_number()==a_number){
+						cout<<"Enter Deposit Amount :";
+						cin>>d_amount;
+						bankArr[i]->deposit(d_amount);
+						break;
+					}else{
+						cout<<"There is no Account found......"<<endl;
+						break;
 					}
-					
-					cout<<"Account Number not Found....."<<endl;
-				}		
-//				break;				
-			case 8:{
+				}
+				
+				break;
+			}
+	
+			case 4:{
 				for(int i=0;i<index;i++){
 					if(bankArr[i]->displaytype()=="Saving Account"){
 						((SavingsAccount*)bankArr[i])->calculateInterest();
 						((SavingsAccount*)bankArr[i])->getSavingsAccountinfo();	
+						cout<<"--------------------------------------------"<<endl;
+						cout<<endl;
 					}else if(bankArr[i]->displaytype()=="Checking Account"){
-						((CheckingAccount*)bankArr[i])->getCheckingAccountinfo();		
+						((CheckingAccount*)bankArr[i])->getCheckingAccountinfo();
+						cout<<"--------------------------------------------"<<endl;
+						cout<<endl;		
 					}else{
 						((FixedDepositAccount*)bankArr[i])->calculateInterest();		
-						((FixedDepositAccount*)bankArr[i])->getFixedDepositAccountinfo();		
+						((FixedDepositAccount*)bankArr[i])->getFixedDepositAccountinfo();	
+						cout<<"--------------------------------------------"<<endl;
+						cout<<endl;	
 					}
 				}
 				break;
@@ -342,45 +367,6 @@ int main(){
 			}
 		
 		}
-		
-		
-		
-		
 	}while(choice!=5);
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	BankAccount b1;
-//	
-//	b1.setAccountinfo(101,"aastha",15000);
-//	b1.withdraw(5000);
-//	b1.deposit(10000);
-//	b1.displayAccountInfo();
-//	b1.getbalance();
-//	
-//	SavingsAccount s1;
-//	
-//	s1.setSavingsAccountinfo(102,"Jiya",10000);
-//	s1.calculateInterest();
-//	s1.getSavingsAccountinfo();
-//
-//	FixedDepositAccount f1;
-//	
-//	f1.setFixedDepositAccountinfo(103,"prachi",20000,2);
-//	f1.calculateInterest();
-//	f1.getFixedDepositAccountinfo();
-
-                       
 	return 0;
 }

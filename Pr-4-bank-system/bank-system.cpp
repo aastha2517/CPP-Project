@@ -36,7 +36,6 @@ class BankAccount{
 		}
 		
 		double getbalance(){
-//			cout<<"Current Balance :"<<balance<<endl;
 			return balance;
 		}
 		
@@ -51,6 +50,7 @@ class BankAccount{
 		int getacc_number(){
 			return AccountNumber;
 		}
+		
 		~BankAccount(){
 			
 		}	
@@ -108,14 +108,12 @@ class CheckingAccount :public BankAccount{
 		CheckingAccount(int a_number,string name,double balance,double overdraft,string gettype)
 		:BankAccount(a_number,name,balance,gettype){
 			this->overdraftLimit=overdraft;
-//			this->amount=amount;
 		}
 		
 		void setCheckingAccountinfo(int a_number,string name,double balance,double overdraft,string gettype)
 		{
 			BankAccount::setAccountinfo(a_number,name,balance,gettype);
 			this->overdraftLimit=overdraft;
-//			this->amount=amount;
 		}
 		double checkOverdraft(){
 			
@@ -191,7 +189,7 @@ int main(){
 	BankAccount *bankArr[100];
 	
 	do{
-		cout<<endl;
+		cout<<"--------------------------------------------"<<endl;
 		cout<<"Press 1 to Create  Account"<<endl;
 		cout<<"Press 2 to Withdraw"<<endl;
 		cout<<"Press 3 to Deposit"<<endl;
@@ -206,6 +204,7 @@ int main(){
 		switch(choice){
 			case 1 :{
 				
+				cout<<endl;
 				cout<<"Press 1 to Add Saving Account"<<endl;
 				cout<<"Press 2 to Add Checking Account"<<endl;
 				cout<<"Press 3 to Add Fix Deposit Account"<<endl;
@@ -280,7 +279,7 @@ int main(){
 						break;
 						
 				}
-				
+				cout<<"Account Successfully Created....."<<endl;
 			break;
 			}
 			
@@ -297,12 +296,11 @@ int main(){
 							cout<<"Enter Withdraw Amount :";
 							cin>>w_amount;
 							bankArr[i]->withdraw(w_amount);
-							break;
+							cout<<"Withdrawal Successful......"<<endl;
 						}else if(bankArr[i]->displaytype()=="Checking Account"){
 							cout<<"Enter Withdraw Amount :";
 							cin>>w_amount;
 							((CheckingAccount*)bankArr[i])->withdraw(w_amount);
-							
 						}else if(bankArr[i]->displaytype()=="Fix Deposit Account"){
 							cout<<"Can't Withdraw from Fix Deposit"<<endl;
 						}else{
@@ -331,6 +329,7 @@ int main(){
 						cout<<"Enter Deposit Amount :";
 						cin>>d_amount;
 						bankArr[i]->deposit(d_amount);
+						cout<<"Deposite Successful......"<<endl;
 						break;
 					}else{
 						cout<<"There is no Account found......"<<endl;

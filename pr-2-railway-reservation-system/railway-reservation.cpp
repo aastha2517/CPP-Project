@@ -1,5 +1,6 @@
-          #include<iostream>
+#include<iostream>
 using namespace std;
+
 class Train{
 	private:
 		
@@ -75,23 +76,15 @@ class RailwaySystem{
 			totaltrains++;
 			cout<<"Train Create Successfully......"<<endl;
 		}
-		
-<<<<<<< HEAD
-		// 2. Display Train Records Function
-=======
+
 		// 2.Display Train Records Function
->>>>>>> 08f04505eb45acc59c7b87242e5e818a55b9e823
 		void displayAllTrains(){
 			for(int i=0;i<totaltrains;i++){
 				trains[i].displayTrainDetail();
 			}
 		}
 		
-<<<<<<< HEAD
-		// 3. Search Train by Number Function
-=======
 		// 3.Search Train by Number Function
->>>>>>> 08f04505eb45acc59c7b87242e5e818a55b9e823
 		void searchTrainByNumber(int number){
 		    for(int i=0;i<totaltrains;i++){
 		        if(trains[i].trainNumber==number){

@@ -19,30 +19,40 @@ class time_convo{
 };
 
 int main(){
-	
 	time_convo t1;
 	int choice,sec,min,h;
-	cout<<"Press 1 to convert second into Minutes and hours"<<endl;
-	cout<<"Press 2 to Count total second"<<endl;
-	cout<<"Enter Your Choice :";
-	cin>>choice;
-	
-	switch(choice){
-		case 1:
-			cout<<"Enter seconds to convert :";
-			cin>>sec;
-			t1.sec_convo(sec);
-			break;
+	do{
 		
-		case 2:
-			cout<<"Enter seconds to count :";
-			cin>>sec;	
-			cout<<"Enter minutes to count :";
-			cin>>min;	
-			cout<<"Enter hours to count :";
-			cin>>h;	
-			t1.sec_count(sec,min,h);
-			break;		
-	}
+		cout<<"Press 1 to convert second into Minutes and hours"<<endl;
+		cout<<"Press 2 to Count total second"<<endl;
+		cout<<"Press 3 to Exit<<endl;
+			
+		cout<<"Enter Your Choice :";
+		cin>>choice;
+		
+		switch(choice){
+			case 1:
+				cout<<"Enter seconds to convert :";
+				cin>>sec;
+				t1.sec_convo(sec);
+				break;
+			
+			case 2:
+				cout<<"Enter seconds to count :";
+				cin>>sec;	
+				cout<<"Enter minutes to count :";
+				cin>>min;	
+				cout<<"Enter hours to count :";
+				cin>>h;	
+				t1.sec_count(sec,min,h);
+				break;
+			
+			case 3:
+				cout<<"Exiting The System..."<<endl;
+
+			default:
+				cout<<"Invalid Choice..."<<endl;
+		}
+	}while(choice!=3)
 	return 0;
 }

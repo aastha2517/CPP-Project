@@ -1,249 +1,400 @@
 #include<iostream>
 using namespace std;
+
 class LibraryItem{
+	
 	private:
+		
 		string title;
 		string author;
 		string dueDate;
 		
 	public:
 		
-		
-		void setTitle(string title){
-			this->title=title;
+		void setTitle(string newTitle){
+			this->title=newTitle;
 		}
 		
-		void setAuthor(string author){
-			this->author=author;
+		void setAuthor(string newAuthor){
+			this->author=newAuthor;
 		}
 		
-		void setDueDate(string dueDate){
-			this->dueDate=dueDate;
-		}	
-		
-		void getTitle(){
-			cout<<"Book Title is :"<<title<<endl;
+		void setDueDate(string newDueDate){
+			this->dueDate=newDueDate;
 		}
 		
-		void getAuthor(){
-			cout<<"Book Author Name is  :"<<author<<endl;
+		string getTitle(){
+			return title;
 		}
 		
-		void getDueDate(){
-			cout<<"Book Due Date is :"<<dueDate<<endl;
+		string getAuthor(){
+			return author;
 		}
 		
+		string getDueDate(){
+			return dueDate;
+		}
+		
+		virtual void setPages(int a){
+			
+		}
+	
+		virtual void setISBN(string n){
+		}
+		
+		virtual void setDuration(int duration){
+			
+		}
+		
+		virtual void setIssueNumber(int num){
+			
+		}
 		
 		virtual void checkOut() = 0;
-		
 		virtual void returnItem() = 0;
-		
 		virtual void displayDetails() = 0;
 		
 };
 
-
-class Book:public LibraryItem{
-	private :
+class Book : public LibraryItem{
+	
+	private:
 		int pages;
 		string isbn;
-	public :
+	public:
 		
-		void setpages(int pages){
-			this->pages=pages;
+		void setPages(int page){
+			this->pages=page;
 		}
 		
-		void setisbn(string isbn){
+		void setISBN(string isbn){
 			this->isbn=isbn;
 		}
 		
-		void getpages(){
-			cout<<"Book Pages are :"<<pages<<endl;
+		int getPages(){
+			return pages;
 		}
 		
-		void getisbn(){
-			cout<<"Book ISBN is :"<<isbn<<endl;
+		string getISBN(){
+			return isbn;
 		}
 		
 		void checkOut(){
-			cout<<"Book Issue Successfully....."<<endl;
+			cout<<"Book Issued Successfully...."<<endl;
 		}
 		
 		void returnItem(){
-			cout<<"Book Returned Successfully....."<<endl;
-		}
+			cout<<"Book Returned Successfully...."<<endl;
+		} 
 		
 		void displayDetails(){
-			LibraryItem::getTitle();
-			LibraryItem::getAuthor();
-			LibraryItem::getDueDate();
-			getpages();
-			getisbn();
+			cout<<"Book Title is : "<<LibraryItem::getTitle()<<endl; 
+			cout<<"Book Due Date is : "<<LibraryItem::getDueDate()<<endl;
+			cout<<"Book Author is : "<<LibraryItem::getAuthor()<<endl;
+			cout<<"Book Pages are : "<<getPages()<<endl;
+			cout<<"Book ISBN is : "<<getISBN()<<endl;
 		}
+			
 	
 };
 
-class DVDs:public LibraryItem{
+class DVDs : public LibraryItem{
 	
-	private :
+	private:
 		int duration;
-	
-	public :
 		
-		void setduration(int duration){
-		 	this->duration =duration;
+	public:
+		
+		void setDuration(int duration){
+			this->duration=duration;
 		}
-		 
-		void getduration(){
-		 	cout<<"DVDs Duration is :"<<duration<<"Days"<<endl;
+		
+		int getDuration(){
+			return duration;
 		}
-		 
+		
 		void checkOut(){
-			cout<<"DVDs Issue Successfully....."<<endl;
+			cout<<"DVD Issued Successfully...."<<endl;
 		}
 		
 		void returnItem(){
-			cout<<"DVDs Returned Successfully....."<<endl;
-		}
+			cout<<"DVD Returned Successfully...."<<endl;
+		} 
 		
 		void displayDetails(){
-			LibraryItem::getTitle();
-			LibraryItem::getAuthor();
-			LibraryItem::getDueDate();
-			getduration();
+			cout<<"Book Title is : "<<LibraryItem::getTitle()<<endl; 
+			cout<<"Book Due Date is : "<<LibraryItem::getDueDate()<<endl;
+			cout<<"Book Author is : "<<LibraryItem::getAuthor()<<endl;
+			cout<<"DVD Duration is : "<<getDuration()<<endl;
 		}
-		
-		
+			
+
+	
 };
 
-class Magazine :public LibraryItem{
+class Magazines : public LibraryItem{
 	
-	private :
+	private:
 		int issueNumber;
-	
-	public :
 		
-		void setissueNumber(int number){
-		 	this->issueNumber=number;
+	public:
+		
+		void setIssueNumber(int issueNum){
+			this->issueNumber=issueNum;
 		}
-		 
-		void getissueNumber(){
-		 	cout<<"Magazine Issue Number is :"<<issueNumber<<endl;
+		
+		int getIssueNumber(){
+			return issueNumber;
 		}
-		 
+		
 		void checkOut(){
-			cout<<"Magazine Issue Successfully....."<<endl;
+			cout<<"Magazines Issued Successfully...."<<endl;
 		}
 		
 		void returnItem(){
-			cout<<"Magazine Returned Successfully....."<<endl;
-		}
+			cout<<"Magazines Returned Successfully...."<<endl;
+		} 
 		
 		void displayDetails(){
-			LibraryItem::getTitle();
-			LibraryItem::getAuthor();
-			LibraryItem::getDueDate();
-			getissueNumber();
+			cout<<"Book Title is : "<<LibraryItem::getTitle()<<endl; 
+			cout<<"Book Due Date is : "<<LibraryItem::getDueDate()<<endl;
+			cout<<"Book Author is : "<<LibraryItem::getAuthor()<<endl;
+			cout<<"Magazines Issue Number is : "<<getIssueNumber()<<endl;
 		}
-		
+			
+
 };
+
 
 int main(){
 	
-	int choice,itemchoice,issueNumber,duration,pages;
-	string title,author,dueDate,isdn;
-	
-	LibraryItem *LibraryArr[100] = new LibraryItem();
+	int choice,itemChoice,issueNum,duration,page;
+	string title,author,dueDate,isbn;
 	int index=0;
 	
+	LibraryItem *libraryArr[100]; 
+	
 	do{
+		cout<<endl;
+		cout<<"Press 1 to Library Item"<<endl;
+		cout<<"Press 2 to Search"<<endl;
+		cout<<"Press 3 to Checkout"<<endl;
+		cout<<"Press 4 to Return"<<endl;
+		cout<<"Press 5 to Display"<<endl;
+		cout<<"Press 6 to Exit"<<endl;
+		cout<<"-------------------------------------------"<<endl<<endl;
 		
-		
-		
-		cout<<"Press 1 To Library Item"<<endl;
-		cout<<"Press 2 To Search"<<endl;
-		cout<<"Press 3 To CheckOut"<<endl;
-		cout<<"Press 4 To Return"<<endl;
-		cout<<"Press 5 To Display"<<endl;
-		cout<<"Press 6 To Exit"<<endl;
-		
-		cout<<"Enter Your Choice";
+		cout<<"Enter your Choice : ";
 		cin>>choice;
 		
 		switch(choice){
-			case 1:{
 			
+			case 1:
+				
+				cout<<endl;
 				cout<<"Press 1 to Add Book"<<endl;
-				cout<<"Press 2 to Add DVDs"<<endl;
+				cout<<"Press 2 to Add DVD"<<endl;
 				cout<<"Press 3 to Add Magazine"<<endl;
+				cout<<"Press 4 to Exit"<<endl;
+				cout<<"-------------------------------------------"<<endl<<endl;
 				
-				cout<<"Enter Your Choice :";
-				cin>>itemchoice;
+				cout<<"Enter Your Choice : ";
+				cin>>itemChoice;
 				
-				switch(itemchoice){
-					case 1:{
+				switch(itemChoice){
+					
+					case 1:
 						
-						cout<<"Enter Book Title :";
+						cout<<"Enter Book Title : ";
 						cin>>title;
 						
-						cout<<"Enter Book Author Name :";
+						cout<<"Enter Book Author Name : ";
 						cin>>author;
 						
-						cout<<"Enter Book Due Date :";
+						cout<<"Enter Book Due Date : ";
 						cin>>dueDate;
 						
-						cout<<"Enter Book Pages :";
-						cin>>pages;
+						cout<<"Enter Book Pages : ";
+						cin>>page;
 						
-						cout<<"Enter Book ISBN Code :";
-						cin>>isdn;
 						
-						LibraryArr[index]->setTitle(title);
-						LibraryArr[index]->setAuthor(author);
-						LibraryArr[index]->setDueDate(dueDate);
-						LibraryArr[index]->setpages(pages);
-						LibraryArr[index]->setisbn(isbn);
+						try{
+							
+							cout<<"Enter Book ISBN Code : ";
+							cin>>isbn;
+							
+							if(isbn.length()!=13){
+								throw 123;
+							}
+					
+						}catch(int a){
+							cout<<"ISBN Code is not 13 Digits so Rewrite it...";
+							cout<<endl;
+							cout<<"Enter Book ISBN Code : ";
+							cin>>isbn;
+						}
+						
+						libraryArr[index] = new Book();
+						
+						libraryArr[index]->setTitle(title);
+						libraryArr[index]->setAuthor(author);
+						libraryArr[index]->setDueDate(dueDate);
+						libraryArr[index]->setPages(page);
+						libraryArr[index]->setISBN(isbn);
 						
 						index++;
-							
+						
+						
 						break;
-					}
-					case 2:{
+						
+					case 2:
+						
+						cout<<"Enter DVDs Title : ";
+						cin>>title;
+						
+						cout<<"Enter DVDs Author Name : ";
+						cin>>author;
+						
+						cout<<"Enter DVDs Due Date : ";
+						cin>>dueDate;
+						
+						cout<<"Enter DVDs Duration :";
+						cin>>duration;
+						
+						
+						libraryArr[index] = new DVDs();
+						
+						libraryArr[index]->setTitle(title);
+						libraryArr[index]->setAuthor(author);
+						libraryArr[index]->setDueDate(dueDate);
+						libraryArr[index]->setDuration(duration);
+						
+						index++;
+						
 						break;
-					}
-					case 3:{
+						
+					case 3:
+						
+						cout<<"Enter Magazines Title : ";
+						cin>>title;
+						
+						cout<<"Enter Magazines Author Name : ";
+						cin>>author;
+						
+						cout<<"Enter Magazines Due Date : ";
+						cin>>dueDate;
+						
+						cout<<"Enter Magazines Issue Number :";
+						cin>>issueNum;
+						
+						libraryArr[index] = new Magazines();
+						
+						libraryArr[index]->setTitle(title);
+						libraryArr[index]->setAuthor(author);
+						libraryArr[index]->setDueDate(dueDate);
+						libraryArr[index]->setIssueNumber(issueNum);
+						
+						index++;
 						break;
-					}
-					default:{
+						
+					case 4:
+						cout<<"Exited....."<<endl;
+						break;
+						
+					default:
 						cout<<"Invalid Choice...."<<endl;
+						break;
+				}
+				
+				break;
+				
+			case 2:{
+				
+				cout<<"Enter Title to Search (Book / DVDs / Magazines) :";
+				cin>>title;
+				
+				bool flag = false;
+				
+				for(int i=0;i<index;i++){
+					if(libraryArr[i]->getTitle()==title){
+						flag = true;
+						cout<<endl;
+						libraryArr[i]->displayDetails();
 						break;
 					}
 				}
-				break;
-			} 
-			case 2:{
-				break;
-			} 
-			case 3:{
-				break;
-			} 
-			case 4:{
-				break;
-			} 
-			case 5:{
-				break;
-			} 
-			case 6:{
-				cout<<"Exiting The System...."<<endl;
+				
+				if(flag==false){
+					cout<<"Library Item Not Found...."<<endl;
+					break;
+				}
 				break;
 			}
-			default:{
-				cout<<"Invalid Choice....."<<endl;
+			case 3:{
+
+				cout<<"Enter Title to Search (Book / DVDs / Magazines) :";
+				cin>>title;
+				
+				bool flag = false;
+				
+				for(int i=0;i<index;i++){
+					if(libraryArr[i]->getTitle()==title){
+						flag = true;
+						libraryArr[i]->checkOut();
+						break;
+					}
+				}
+				
+				if(flag==false){
+					cout<<"Library Item Not Found...."<<endl;
+					break;
+				}
+				
 				break;
-			} 
+			}
+			
+			case 4:{
+				
+				cout<<"Enter Title to Search (Book / DVDs / Magazines) :";
+				cin>>title;
+				
+				bool flag = false;
+				
+				for(int i=0;i<index;i++){
+					if(libraryArr[i]->getTitle()==title){
+						flag = true;
+						libraryArr[i]->returnItem();
+						break;
+					}
+				}
+				
+				if(flag==false){
+					cout<<"Library Item Not Found...."<<endl;
+					break;
+				}
+				
+				break;
+			}
+				
+			case 5:
+				
+				for(int i=0;i<index;i++){
+					cout<<endl;
+					libraryArr[i]->displayDetails();
+				}
+			
+				break;
+				
+			case 6:
+				cout<<"Exiting The System...";
+				break;
+				
+			default:
+				cout<<"Invalid Choice..."<<endl;
+				break;
+			
 		}
-		
-	}while(choice!=7);
+	}while(choice!=6);
 	
 	return 0;
 }

@@ -42,7 +42,7 @@ class LibraryItem{
 		virtual void setISBN(string n){
 		}
 		
-		virtual void setDuration(int duration){
+		virtual void setDuration(string duration){
 			
 		}
 		
@@ -87,12 +87,14 @@ class Book : public LibraryItem{
 			cout<<"Book Returned Successfully...."<<endl;
 		} 
 		
-		void displayDetails(){
+		void displayDetails(){	
+			
 			cout<<"Book Title is : "<<LibraryItem::getTitle()<<endl; 
-			cout<<"Book Due Date is : "<<LibraryItem::getDueDate()<<endl;
 			cout<<"Book Author is : "<<LibraryItem::getAuthor()<<endl;
-			cout<<"Book Pages are : "<<getPages()<<endl;
-			cout<<"Book ISBN is : "<<getISBN()<<endl;
+			cout<<"Book Due Date is : "<<LibraryItem::getDueDate()<<endl;
+			cout<<"Book Pages is : "<<getPages()<<endl;
+			cout<<"Book ISBN Code is : "<<getISBN()<<endl;
+		
 		}
 			
 	
@@ -122,10 +124,11 @@ class DVDs : public LibraryItem{
 		} 
 		
 		void displayDetails(){
-			cout<<"Book Title is : "<<LibraryItem::getTitle()<<endl; 
-			cout<<"Book Due Date is : "<<LibraryItem::getDueDate()<<endl;
-			cout<<"Book Author is : "<<LibraryItem::getAuthor()<<endl;
-			cout<<"DVD Duration is : "<<getDuration()<<endl;
+			
+			cout<<"DVDs Title is : "<<LibraryItem::getTitle()<<endl; 
+			cout<<"DVDs Author is : "<<LibraryItem::getAuthor()<<endl;
+			cout<<"DVDs Due Date is : "<<LibraryItem::getDueDate()<<endl;
+			cout<<"DVDs Duration is : "<<getDuration()<<endl;
 		}
 			
 
@@ -156,10 +159,12 @@ class Magazines : public LibraryItem{
 		} 
 		
 		void displayDetails(){
-			cout<<"Book Title is : "<<LibraryItem::getTitle()<<endl; 
-			cout<<"Book Due Date is : "<<LibraryItem::getDueDate()<<endl;
-			cout<<"Book Author is : "<<LibraryItem::getAuthor()<<endl;
+			
+			cout<<"Magazines Title is : "<<LibraryItem::getTitle()<<endl; 
+			cout<<"Magazines Author is : "<<LibraryItem::getAuthor()<<endl;
+			cout<<"Magazines Due Date is : "<<LibraryItem::getDueDate()<<endl;
 			cout<<"Magazines Issue Number is : "<<getIssueNumber()<<endl;
+		
 		}
 			
 
@@ -168,14 +173,14 @@ class Magazines : public LibraryItem{
 
 int main(){
 	
-	int choice,itemChoice,issueNum,duration,page;
-	string title,author,dueDate,isbn;
-	int index=0;
+	int choice,itemChoice,issueNum,page;
+	string title,author,dueDate,isbn,duration;
+	int index=0;                  
 	
 	LibraryItem *libraryArr[100]; 
 	
 	do{
-		cout<<endl;
+		cout<<"=========Library Management System========="<<endl;
 		cout<<"Press 1 to Library Item"<<endl;
 		cout<<"Press 2 to Search"<<endl;
 		cout<<"Press 3 to Checkout"<<endl;
@@ -183,8 +188,8 @@ int main(){
 		cout<<"Press 5 to Display"<<endl;
 		cout<<"Press 6 to Exit"<<endl;
 		cout<<"-------------------------------------------"<<endl<<endl;
-		
-		cout<<"Enter your Choice : ";
+
+		cout<<"Enter Your Choice :";
 		cin>>choice;
 		
 		switch(choice){
@@ -192,6 +197,7 @@ int main(){
 			case 1:
 				
 				cout<<endl;
+				cout<<"-------------------------------------------"<<endl;
 				cout<<"Press 1 to Add Book"<<endl;
 				cout<<"Press 2 to Add DVD"<<endl;
 				cout<<"Press 3 to Add Magazine"<<endl;
@@ -205,14 +211,19 @@ int main(){
 					
 					case 1:
 						
+						cin.ignore();
+						
+						cout<<endl;
+						cout<<"-------------------------------------------"<<endl;
+						
 						cout<<"Enter Book Title : ";
-						cin>>title;
+						getline(cin,title);
 						
 						cout<<"Enter Book Author Name : ";
-						cin>>author;
+						getline(cin,author);
 						
-						cout<<"Enter Book Due Date : ";
-						cin>>dueDate;
+						cout<<"Enter Book Due Date (dd/mm/yyyy) : ";
+						getline(cin,dueDate);
 						
 						cout<<"Enter Book Pages : ";
 						cin>>page;
@@ -234,6 +245,8 @@ int main(){
 							cin>>isbn;
 						}
 						
+						cout<<endl;
+						
 						libraryArr[index] = new Book();
 						
 						libraryArr[index]->setTitle(title);
@@ -249,21 +262,27 @@ int main(){
 						
 					case 2:
 						
+						cin.ignore();
+						
+						cout<<endl;
+						cout<<"-------------------------------------------"<<endl;
+						
 						cout<<"Enter DVDs Title : ";
-						cin>>title;
+						getline(cin,title);
 						
 						cout<<"Enter DVDs Author Name : ";
-						cin>>author;
+						getline(cin,author);
 						
-						cout<<"Enter DVDs Due Date : ";
-						cin>>dueDate;
+						cout<<"Enter DVDs Due Date (dd/mm/yyyy) : ";
+						getline(cin,dueDate);
 						
-						cout<<"Enter DVDs Duration :";
-						cin>>duration;
+						cout<<"Enter DVDs PlayTime Duration :";
+						getline(cin,duration);
 						
+						cout<<endl;
 						
 						libraryArr[index] = new DVDs();
-						
+						cin>>duration;
 						libraryArr[index]->setTitle(title);
 						libraryArr[index]->setAuthor(author);
 						libraryArr[index]->setDueDate(dueDate);
@@ -275,17 +294,24 @@ int main(){
 						
 					case 3:
 						
+						cin.ignore();
+						
+						cout<<endl;
+						cout<<"-------------------------------------------"<<endl;
+						
 						cout<<"Enter Magazines Title : ";
-						cin>>title;
+						getline(cin,title);
 						
 						cout<<"Enter Magazines Author Name : ";
-						cin>>author;
+						getline(cin,author);
 						
-						cout<<"Enter Magazines Due Date : ";
-						cin>>dueDate;
+						cout<<"Enter Magazines Due Date (dd/mm/yyyy) : ";
+						getline(cin,dueDate);
 						
 						cout<<"Enter Magazines Issue Number :";
 						cin>>issueNum;
+						
+						cout<<endl;
 						
 						libraryArr[index] = new Magazines();
 						
@@ -320,12 +346,14 @@ int main(){
 						flag = true;
 						cout<<endl;
 						libraryArr[i]->displayDetails();
+						cout<<endl;
 						break;
 					}
 				}
 				
 				if(flag==false){
 					cout<<"Library Item Not Found...."<<endl;
+					cout<<endl;
 					break;
 				}
 				break;
@@ -341,12 +369,14 @@ int main(){
 					if(libraryArr[i]->getTitle()==title){
 						flag = true;
 						libraryArr[i]->checkOut();
+						cout<<endl;
 						break;
 					}
 				}
 				
 				if(flag==false){
 					cout<<"Library Item Not Found...."<<endl;
+					cout<<endl;
 					break;
 				}
 				
@@ -364,37 +394,55 @@ int main(){
 					if(libraryArr[i]->getTitle()==title){
 						flag = true;
 						libraryArr[i]->returnItem();
+						cout<<endl;
 						break;
 					}
 				}
 				
 				if(flag==false){
 					cout<<"Library Item Not Found...."<<endl;
+					cout<<endl;
 					break;
 				}
 				
 				break;
 			}
 				
-			case 5:
+			case 5:{
 				
-				for(int i=0;i<index;i++){
+				
+				if(index==0){
+					cout<<"Library Item Not Found..."<<endl<<endl;
 					cout<<endl;
-					libraryArr[i]->displayDetails();
+				}else{
+					for(int i=0;i<index;i++){
+						cout<<endl;
+						cout<<"-------------------------------------------"<<endl;
+						cout<<endl;
+						libraryArr[i]->displayDetails();
+						cout<<endl;
+						cout<<"-------------------------------------------"<<endl;
+					}
 				}
 			
 				break;
+			}
 				
 			case 6:
 				cout<<"Exiting The System...";
+				cout<<endl;
 				break;
 				
 			default:
-				cout<<"Invalid Choice..."<<endl;
+				cout<<"Invalid Choice..."<<endl<<endl;
+				
 				break;
 			
 		}
 	}while(choice!=6);
 	
+	for(int i=0;i<index;i++){
+		delete libraryArr[i];
+	}
 	return 0;
 }
